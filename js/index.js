@@ -7,7 +7,7 @@ function updateSubtotal(product) {
   const price = product.querySelector('.price span');
   const quantity = product.querySelector('.quantity input[type=number]');
   const subtotalShow = product.querySelector('#cart .subtotal span');
-
+  
   const priceValue = price.textContent;
   const quantityValue = quantity.value;
 
@@ -15,33 +15,40 @@ function updateSubtotal(product) {
 
   subtotalShow.textContent=subtotalCalc;
 
-
+  return subtotalCalc;
 }
 
 function calculateAll() {
   // code in the following two lines is added just for testing purposes.
   // it runs when only iteration 1 is completed. at later point, it can be removed.
-  const singleProduct = document.querySelector('.product');
-  updateSubtotal(singleProduct);
+  // const singleProduct = document.querySelector('.product');
+  // updateSubtotal(singleProduct);
   // end of test
 
   // ITERATION 2
   //... your code goes here
+  const allProducts = document.querySelectorAll('#cart .product');
+
   let total = 0;
 
-  const allProducts = document.querySelectorAll('#cart .product');
   allProducts.forEach(element => {
       updateSubtotal(element);
-      // total += subtotalCalc;
+      total += Number(element.querySelector('#cart .subtotal span').textContent);
+      console.log(element.querySelector('#cart .subtotal span').textContent);
   });
 
-  // console.log(allProducts);
+  // allProducts.forEach(element=> {
+  //   preTotal = updateSubtotal(element);
+  //   total += subtotalCalc;
+  // })
+
+  console.log(total);
 
   // ITERATION 3
   //... your code goes here
-
-  const totalValue = document.getElementById('total-value');
-  totalValue.innerText = total;
+  const showTotal = document.querySelector('#total-value span');
+  showTotal.textContent = total;
+  
 
 }
 
@@ -51,15 +58,7 @@ function removeProduct(event) {
   const target = event.currentTarget;
   console.log('The target in remove is:', target);
   //... your code goes here
-  event.style.display='none';
-
-  // const buttons = document.querySelectorAll('.btn-remove');
-  // buttons.forEach(button => {
-  //   button.addEventListener('click', () => {
-  //     console.log("JAI CLIQUE SUR LE BTN REMOVE")
-  //   })
-  // })
-
+  event.remove();
 }
 
 // test
@@ -68,6 +67,8 @@ buttons.forEach(button => {
   button.addEventListener('click', function(event) {
     console.log("JAI CLIQUE SUR LE BTN REMOVE : ", button.parentElement.parentElement)
     removeProduct(button.parentElement.parentElement);
+  calculateAll();
+
   })
 })
 
