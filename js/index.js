@@ -74,8 +74,21 @@ buttons.forEach(button => {
 
 // ITERATION 5
 
+const createButton = document.getElementById('create');
+
+const productToCreate = document.querySelector('tfoot .create-product');
+console.log(productToCreate);
+
+createButton.addEventListener('click', () => createProduct(productToCreate));
+
+
 function createProduct() {
   //... your code goes here
+  const tBody = document.querySelector('#cart tbody');
+  // let newRow = 
+  tBody.insertRow(-1).insertCell()*3;
+  // let newCell = newRow.insertCell(3);
+
 }
 
 window.addEventListener('load', () => {
