@@ -77,7 +77,7 @@ buttons.forEach(button => {
 const createButton = document.getElementById('create');
 
 const productToCreate = document.querySelector('tfoot .create-product');
-console.log(productToCreate);
+console.log(productToCreate, ' : PRODUC TO CREATE');
 
 createButton.addEventListener('click', () => createProduct(productToCreate));
 
@@ -85,9 +85,23 @@ createButton.addEventListener('click', () => createProduct(productToCreate));
 function createProduct() {
   //... your code goes here
   const tBody = document.querySelector('#cart tbody');
-  // let newRow = 
-  tBody.insertRow(-1).insertCell()*3;
-  // let newCell = newRow.insertCell(3);
+console.log(productToCreate.querySelector('td:first-of-type input').value, ": Custom Product Name");
+let newRow = tBody.insertRow(-1);
+newRow.innerHTML=`<td class="name">
+  <span>${productToCreate.querySelector('td:first-of-type input').value}</span>
+</td>
+<td class="price">$<span>${productToCreate.querySelector('td:nth-of-type(2) input').value}</span></td>
+<td class="quantity">
+  <input type="number" value="0" min="0" placeholder="Quantity" />
+</td>
+<td class="subtotal">$<span>0</span></td>
+<td class="action">
+  <button class="btn btn-remove">Remove</button>
+</td>`;
+
+  // let newRow = tBody.insertRow(-1);
+  // newRow.insertCell();
+ 
 
 }
 
