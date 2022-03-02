@@ -61,7 +61,7 @@ function removeProduct(event) {
   event.remove();
 }
 
-// test
+// BOUTONS REMOVE
 const buttons = document.querySelectorAll('.btn-remove');
 buttons.forEach(button => {
   button.addEventListener('click', function(event) {
@@ -77,32 +77,52 @@ buttons.forEach(button => {
 const createButton = document.getElementById('create');
 
 const productToCreate = document.querySelector('tfoot .create-product');
-console.log(productToCreate, ' : PRODUC TO CREATE');
+console.log(productToCreate, ' : PRODUCT TO CREATE');
 
 createButton.addEventListener('click', () => createProduct(productToCreate));
 
 
 function createProduct() {
   //... your code goes here
+let inputValue = productToCreate.querySelector('td:first-of-type input').value
+
+  // 1. Je récupère la table
   const tBody = document.querySelector('#cart tbody');
-console.log(productToCreate.querySelector('td:first-of-type input').value, ": Custom Product Name");
-let newRow = tBody.insertRow(-1);
-newRow.innerHTML=`<td class="name">
-  <span>${productToCreate.querySelector('td:first-of-type input').value}</span>
-</td>
-<td class="price">$<span>${productToCreate.querySelector('td:nth-of-type(2) input').value}</span></td>
-<td class="quantity">
-  <input type="number" value="0" min="0" placeholder="Quantity" />
-</td>
-<td class="subtotal">$<span>0</span></td>
-<td class="action">
-  <button class="btn btn-remove">Remove</button>
-</td>`;
+  // 2. Test, je récupère bien les infos de mon new product ?
+  console.log(inputValue, ": Custom Product Name");
+  // 3. J'insère une nouvelle rangée à ma table
+  let newRow = tBody.insertRow(-1);
+  // 4. Je lui ajoute la classe 'product',
+  // pour que les méthodes la prenne en compte
+  newRow.classList.add('product');
+  // 5. Je copie le html des row dans ma nouvelle row
+  // avec les données de mon nouveau produit
+  newRow.innerHTML=`<td class="name">
+  <span>${inputValue}</span>
+  </td>
+  <td class="price">$<span>${productToCreate.querySelector('td:nth-of-type(2) input').value}</span></td>
+  <td class="quantity">
+    <input type="number" value="0" min="0" placeholder="Quantity" />
+  </td>
+  <td class="subtotal">$<span>0</span></td>
+  <td class="action">
+    <button class="btn btn-remove">Remove</button>
+  </td>`;
 
-  // let newRow = tBody.insertRow(-1);
-  // newRow.insertCell();
- 
+  // 6. Je clear les inputs
+  productToCreate.querySelector('td:first-of-type input').value='';
+  productToCreate.querySelector('td:nth-of-type(2) input').value='';
 
+  // 7. Activation du bouton 'remove'
+  let removeBtn = newRow.querySelector('.btn-remove')
+  console.log(removeBtn, "REMOVE BTN");
+
+  removeBtn.addEventListener('click', function(event) {
+    console.log("new BTN REMOVE clik: ", removeBtn.parentElement.parentElement);
+    removeProduct(removeBtn.parentElement.parentElement);
+  calculateAll();
+
+  })
 }
 
 window.addEventListener('load', () => {
